@@ -1,0 +1,448 @@
+{
+  "name": "AI + Data Engineer Challenge",
+  "nodes": [
+    {
+      "parameters": {
+        "binaryPropertyName": "Upload_file",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        160,
+        0
+      ],
+      "id": "52945c6d-3622-4efd-80ba-489d478b997f",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "formTitle": "Data Challenge",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Upload file",
+              "fieldType": "file"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        -32,
+        0
+      ],
+      "id": "7bd4730f-30fd-44c7-af70-f144eb20640a",
+      "name": "On form submission",
+      "webhookId": "75df8f10-7042-457a-af57-ddde3893192b"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "ads_spend",
+          "mode": "list",
+          "cachedResultName": "ads_spend"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "spend": "={{ $json.spend }}",
+            "clicks": "={{ $json.clicks }}",
+            "impressions": "={{ $json.impressions }}",
+            "conversions": "={{ $json.conversions }}",
+            "date": "={{ $json.date }}",
+            "platform": "={{ $json.platform }}",
+            "account": "={{ $json.account }}",
+            "campaign": "={{ $json.campaign }}",
+            "device": "={{ $json.device }}",
+            "country": "={{ $json.country }}",
+            "load_date": "={{ $json.load_date }}",
+            "source_file_name": "={{ $json['source_file_name '] }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "platform",
+              "displayName": "platform",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "account",
+              "displayName": "account",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "campaign",
+              "displayName": "campaign",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "country",
+              "displayName": "country",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "device",
+              "displayName": "device",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "spend",
+              "displayName": "spend",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "clicks",
+              "displayName": "clicks",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "impressions",
+              "displayName": "impressions",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "conversions",
+              "displayName": "conversions",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "load_date",
+              "displayName": "load_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "source_file_name",
+              "displayName": "source_file_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        592,
+        192
+      ],
+      "id": "6b552fc4-6a84-4e8b-8a05-153c70b15177",
+      "name": "Insert rows in a table",
+      "credentials": {
+        "postgres": {
+          "id": "rAnBOcRATxkGo0nk",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5f825f0a-eb10-4262-9f81-ab4a6741712e",
+              "name": "=load_date",
+              "value": "={{$now}}",
+              "type": "string"
+            },
+            {
+              "id": "c5a85c3e-85f5-4488-bed4-a73fe3a3edae",
+              "name": "=source_file_name ",
+              "value": " ads_spend",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        368,
+        0
+      ],
+      "id": "6b39db0a-2ef9-4df0-bd53-98f4aa6be83c",
+      "name": "Add Fields"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "CREATE TABLE IF NOT EXISTS ads_spend (\n    id SERIAL PRIMARY KEY,\n    date DATE,\n    platform VARCHAR(50),\n    account VARCHAR(100),\n    campaign VARCHAR(255),\n    country VARCHAR(10),\n    device VARCHAR(50),\n    spend NUMERIC(12,2),\n    clicks INT,\n    impressions INT,\n    conversions INT,\n    load_date DATE,\n    source_file_name VARCHAR(50)\n);\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        592,
+        0
+      ],
+      "id": "0af1df9b-ab08-41cb-b846-9c1238220a85",
+      "name": "Create Table",
+      "credentials": {
+        "postgres": {
+          "id": "rAnBOcRATxkGo0nk",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "Data Ingestion\n",
+        "height": 80,
+        "width": 176
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        -112
+      ],
+      "id": "ee02737c-82b2-41dc-8b9a-abc6a9ba5e98",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM ads_spend LIMIT 10;\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -32,
+        368
+      ],
+      "id": "7eb53c00-b9c3-416b-8bdd-260be46e8043",
+      "name": "Persistence Test",
+      "credentials": {
+        "postgres": {
+          "id": "rAnBOcRATxkGo0nk",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH base AS (\n    SELECT\n        CAST(date AS DATE) AS date,\n        SUM(spend) AS spend,\n        SUM(conversions) AS conversions\n    FROM ads_spend\n    GROUP BY 1\n),\n\nkpis AS (\n    SELECT\n        date,\n        spend,\n        conversions,\n        conversions * 100 AS revenue,\n        CASE WHEN conversions > 0 THEN spend::float / conversions END AS cac,\n        CASE WHEN spend > 0 THEN (conversions * 100)::float / spend END AS roas\n    FROM base\n),\n\nlast_30 AS (\n    SELECT\n        SUM(spend) AS spend,\n        SUM(conversions) AS conversions,\n        SUM(revenue) AS revenue,\n        SUM(spend) / NULLIF(SUM(conversions), 0) AS cac,\n        SUM(revenue) / NULLIF(SUM(spend), 0) AS roas\n    FROM kpis\n    WHERE date >= (SELECT MAX(date) FROM kpis) - INTERVAL '29 days'\n),\n\nprior_30 AS (\n    SELECT\n        SUM(spend) AS spend,\n        SUM(conversions) AS conversions,\n        SUM(revenue) AS revenue,\n        SUM(spend) / NULLIF(SUM(conversions), 0) AS cac,\n        SUM(revenue) / NULLIF(SUM(spend), 0) AS roas\n    FROM kpis\n    WHERE date BETWEEN (SELECT MAX(date) FROM kpis) - INTERVAL '59 days'\n                    AND (SELECT MAX(date) FROM kpis) - INTERVAL '30 days'\n)\n\nSELECT\n    'spend' AS metric,\n    l.spend AS last_30,\n    p.spend AS prior_30,\n    l.spend - p.spend AS delta_abs,\n    ROUND(100.0 * (l.spend - p.spend) / NULLIF(p.spend, 0), 2) AS delta_pct\nFROM last_30 l, prior_30 p\nUNION ALL\nSELECT\n    'conversions', l.conversions, p.conversions,\n    l.conversions - p.conversions,\n    ROUND(100.0 * (l.conversions - p.conversions) / NULLIF(p.conversions, 0), 2)\nFROM last_30 l, prior_30 p\nUNION ALL\nSELECT\n    'revenue', l.revenue, p.revenue,\n    l.revenue - p.revenue,\n    ROUND(100.0 * (l.revenue - p.revenue) / NULLIF(p.revenue, 0), 2)\nFROM last_30 l, prior_30 p\nUNION ALL\nSELECT\n    'cac', l.cac, p.cac,\n    l.cac - p.cac,\n    ROUND(100.0 * (l.cac - p.cac) / NULLIF(p.cac, 0), 2)\nFROM last_30 l, prior_30 p\nUNION ALL\nSELECT\n    'roas', l.roas, p.roas,\n    l.roas - p.roas,\n    ROUND(100.0 * (l.roas - p.roas) / NULLIF(p.roas, 0), 2)\nFROM last_30 l, prior_30 p;\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        176,
+        368
+      ],
+      "id": "81471eda-405b-42d1-a7be-a30db9b72d19",
+      "name": "KPI Modeling",
+      "credentials": {
+        "postgres": {
+          "id": "rAnBOcRATxkGo0nk",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "-- KPI Metrics Comparison (Postgres)\n-- Dates:\n-- Current window (2025-06-01 → 2025-06-30) - Last 30 days\n-- Comparison window (2025-05-01 → 2025-05-31) - Prior 30 days\n\n\nWITH base AS (\n    SELECT\n        CAST(date AS DATE) AS date,\n        SUM(spend) AS spend,\n        SUM(conversions) AS conversions\n    FROM ads_spend\n    GROUP BY 1\n),\n\nkpis AS (\n    SELECT\n        date,\n        spend,\n        conversions,\n        conversions * 100 AS revenue,\n        CASE WHEN conversions > 0 THEN spend::float / conversions END AS cac,\n        CASE WHEN spend > 0 THEN (conversions * 100)::float / spend END AS roas\n    FROM base\n),\n\n-- Current window (2025-06-01 → 2025-06-30)\nwindow_1 AS (\n    SELECT\n        SUM(spend) AS spend,\n        SUM(conversions) AS conversions,\n        SUM(revenue) AS revenue,\n        SUM(spend)::float / NULLIF(SUM(conversions), 0) AS cac,\n        SUM(revenue)::float / NULLIF(SUM(spend), 0) AS roas\n    FROM kpis\n    WHERE date BETWEEN '2025-06-01' AND '2025-06-30'\n),\n\n-- Comparison window (2025-05-01 → 2025-05-31)\nwindow_2 AS (\n    SELECT\n        SUM(spend) AS spend,\n        SUM(conversions) AS conversions,\n        SUM(revenue) AS revenue,\n        SUM(spend)::float / NULLIF(SUM(conversions), 0) AS cac,\n        SUM(revenue)::float / NULLIF(SUM(spend), 0) AS roas\n    FROM kpis\n    WHERE date BETWEEN '2025-05-01' AND '2025-05-31'\n)\n\nSELECT\n    metric,\n    window_1,\n    window_2,\n    window_1 - window_2 AS delta_abs,\n    ROUND(\n        (100.0 * (window_1 - window_2) / NULLIF(window_2, 0))::numeric,\n        2\n    ) AS delta_pct\nFROM (\n    SELECT 'spend' AS metric, w1.spend AS window_1, w2.spend AS window_2 FROM window_1 w1, window_2 w2\n    UNION ALL\n    SELECT 'conversions', w1.conversions, w2.conversions FROM window_1 w1, window_2 w2\n    UNION ALL\n    SELECT 'revenue', w1.revenue, w2.revenue FROM window_1 w1, window_2 w2\n    UNION ALL\n    SELECT 'cac', w1.cac, w2.cac FROM window_1 w1, window_2 w2\n    UNION ALL\n    SELECT 'roas', w1.roas, w2.roas FROM window_1 w1, window_2 w2\n) t;\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        384,
+        368
+      ],
+      "id": "8f05aa91-2d66-4e68-89d2-e41b5ef7829d",
+      "name": "Analyst Access",
+      "credentials": {
+        "postgres": {
+          "id": "rAnBOcRATxkGo0nk",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "--Steps:\n\n--Natural language input → Analyst asks a question in plain English - “Compare CAC and ROAS for last 30 days vs prior 30 days.”\n\n--Template mapping → The system detects the metric(s) + time window(s).\n\n--SQL execution → Dates are injected into the SQL script.\n\n--Result → Compact KPI comparison table returned to the analyst.\n\n  \n  WITH base AS (\n    SELECT CAST(date AS DATE) AS date, SUM(spend) AS spend, SUM(conversions) AS conversions\n    FROM ads_spend\n    GROUP BY 1\n),\nkpis AS (\n    SELECT\n        date,\n        spend,\n        conversions,\n        conversions * 100 AS revenue,\n        CASE WHEN conversions > 0 THEN spend::float / conversions END AS cac,\n        CASE WHEN spend > 0 THEN (conversions * 100)::float / spend END AS roas\n    FROM base\n),\nwindow_1 AS (\n    SELECT\n        SUM(spend)::float / NULLIF(SUM(conversions), 0) AS cac,\n        SUM(conversions * 100)::float / NULLIF(SUM(spend), 0) AS roas\n    FROM kpis\n    WHERE date BETWEEN '2025-05-01' AND '2025-05-31'\n),\nwindow_2 AS (\n    SELECT\n        SUM(spend)::float / NULLIF(SUM(conversions), 0) AS cac,\n        SUM(conversions * 100)::float / NULLIF(SUM(spend), 0) AS roas\n    FROM kpis\n    WHERE date BETWEEN '2025-06-01' AND '2025-06-30'\n)\nSELECT\n    metric,\n    window_1,\n    window_2,\n    window_1 - window_2 AS delta_abs,\n    ROUND(\n        (100.0 * (window_1 - window_2) / NULLIF(window_2, 0))::numeric,2) AS delta_pct\nFROM (\n    SELECT 'cac' AS metric, w1.cac AS window_1, w2.cac AS window_2 FROM window_1 w1, window_2 w2\n    UNION ALL\n    SELECT 'roas', w1.roas, w2.roas FROM window_1 w1, window_2 w2\n) t;\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        592,
+        368
+      ],
+      "id": "ba9d7298-9240-43aa-b688-2ff91476c3ee",
+      "name": "Simple mapping",
+      "credentials": {
+        "postgres": {
+          "id": "rAnBOcRATxkGo0nk",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "SQL Models/Queries",
+        "height": 80,
+        "width": 150
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        272
+      ],
+      "id": "cf28a3fa-d0bb-4646-853f-a23c7444f5e6",
+      "name": "Sticky Note1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Add Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Fields": {
+      "main": [
+        [
+          {
+            "node": "Create Table",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Insert rows in a table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Persistence Test": {
+      "main": [
+        []
+      ]
+    },
+    "KPI Modeling": {
+      "main": [
+        []
+      ]
+    },
+    "Analyst Access": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Sao_Paulo",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "1839dc05-1acd-4fe6-bb06-71554dc196a8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a430736d25f3c697f2bc13914582a9f98062e5f4903ecbc10b96684eb37ae479"
+  },
+  "id": "mt4jBhIuABMDafTm",
+  "tags": []
+}
